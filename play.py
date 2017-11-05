@@ -2,6 +2,7 @@
 
 import sys
 import os
+import subprocess
 
 # returns a list of names (with extension, without full path) of all files in folder path
 def list_wav_files(path):
@@ -19,7 +20,12 @@ def main(argv):
         path = argv[1];
 
     files = list_wav_files(path)
-    print files
+    
+    for f in files:
+        # -D plughw:CARD=Audio,DEV=0
+        command = "/usr/bin/aplay " + f
+        print("Executing command " + command + " ...") 
+        retcode = os.system(command)
 
 if __name__ == "__main__":
     main(sys.argv)
